@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body style="background: rgb(121,9,119); background: linear-gradient(90deg, rgba(121,9,119,1) 5%, rgba(0,212,255,1) 100%);">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 border-dark" style="border-width: 5px;">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.png" height="50px" alt="Логотип" class="d-inline-block align-text-top" />
+                </a>
+                <div class="flex-grow-1">
+                    <ul class="navbar-nav d-flex justify-content-around">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Constructor">Конструктор</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Catalog">Каталог</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">Корзина</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <div style="height:100px;"></div>
+    <footer class="border-top box-shadow footer d-flex flex-row justify-content-around bg-white border-dark">
+            <div class="d-flex flex-column">
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">О Компании</a>
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">Партнёрам</a>
+            </div>
+            <div class="d-flex flex-column align-content-start flex-wrap">
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">Правила продаж</a>
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">Вакансии</a>
+            </div>
+            <div class="d-flex flex-column align-content-start flex-wrap">
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">Контакты</a>
+                <a class="nav-link text-danger align-self-start" asp-area="" asp-controller="" asp-action="">+79999999999</a>
+            </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
