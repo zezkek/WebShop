@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using WebShop.Models;
 
 namespace WebShop.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -46,7 +47,7 @@ namespace WebShop.Data
         public DbSet<Motherboard> Motherboard { get; set; }
         public DbSet<PowerSupply> PowerSupply { get; set; }
         public DbSet<RAM> RAM { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
         public DbSet<RAM_Motherboard> RAM_Motherboard { get; set; }
         public DbSet<CPU_Motherboard> CPU_Motherboard { get; set; }
         public DbSet<CPU_RAM> CPU_RAM { get; set; }

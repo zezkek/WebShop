@@ -1,15 +1,29 @@
-﻿@{
+﻿@model string[]
+@{
     ViewData["Title"] = "Main page";
 }
 
 <div class="d-flex flex-column border border-dark rounded" style="background-color: #d6d6d6; height: 800px; gap: 20px; padding: 20px; ">
     <div class="d-flex flex-shrink-1 h-25" style="gap:20px;">
-        <div class="bg-white flex-fill border border-dark rounded"></div>
-        <div class="bg-white flex-fill border border-dark rounded"></div>
-        <div class="bg-white flex-fill border border-dark rounded"></div>
+        @for (int i = 0; i <= 6; i += 3)
+        {
+        <div class="bg-white flex-fill border border-dark rounded d-flex p-2" style="gap:10px;">
+            <img class="rounded" src="~/img/@Model[i]" style="max-width:150px;"/>
+            <div class="d-flex flex-column">
+                <p class="text-break flex-fill text-center">@Model[i + 1]</p>
+                <p class="text-break flex-fill text-center">@Model[i + 2]</p>
+            </div>
+        </div>
+        }
     </div>
     <div class="d-flex h-75" style="gap:20px;">
-        <div class="bg-white flex-fill border border-dark rounded"></div>
-        <div class="bg-white flex-fill border border-dark rounded"></div>
+        <div class="bg-white flex-fill border border-dark rounded d-flex flex-column justify-content-center">
+            <img class="rounded img-thumbnail" src="~/img/wTerminal.png" style="max-width:200px;" />
+            <p class="text-break flex-fill text-center">Состоялся релиз стабильной версии Windows Terminal 1.13, включающей в себя все функции, которые были доступны в предварительной версии.</p>
+        </div>
+        <div class="bg-white flex-fill border border-dark rounded d-flex flex-column justify-content-center p-2">
+            <img class="rounded align-self-center p-3 img-thumbnail" src="~/img/amdNews.jpg" style="max-width:500px;" />
+            <p class="text-break flex-fill text-center">В рамках выставки Computex 2022 AMD провела большую презентацию, которая в первую очередь была посвящена грядущим десктопным процессорам линейки Ryzen 7000 на базе архитектуры Zen 4 и новой платформе Socket AM5. Десктопные процессоры линейки Ryzen 7000 были анонсированы ещё на CES 2022 в начале этого года, однако на тот момент AMD была не готова поделиться подробностями о новинках. Полноценная презентация процессоров, конечно, состоится ближе к старту продаж, но мероприятие в рамках Computex 2022 позволило в общих чертах понять, что подготовила AMD на этот раз.</p>
+        </div>
     </div>
 </div>
