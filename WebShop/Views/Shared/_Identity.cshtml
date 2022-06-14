@@ -1,0 +1,32 @@
+﻿@inject UserManager<ApplicationUser> UserManager;
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Вход</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Регистрация</a>
+    </li>
+
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">Корзина</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Корзина</a>
+    </li>
+    @if (User.IsInRole("Admin"))
+    {
+    <li class="nav-item focus">
+        <a class="nav-link text-dark" asp-controller="Account" asp-action="Users">Пользователи</a>
+    </li>
+    }
+    <li class="nav-item">
+        <form asp-controller="Account" asp-action="Logout">
+            <button class="border-0 bg-white nav-link text-dark" style="border:none;">Выход</button>
+        </form>
+    </li>
+}

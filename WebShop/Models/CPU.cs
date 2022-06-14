@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
+using WebShop.Data.Base;
 
 namespace WebShop.Models
 {
-    public class CPU
+    public class CPU : IEntityBase
     {
         [Key]
         public int Id { get; set; }

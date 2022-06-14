@@ -51,5 +51,8 @@ namespace WebShop.Data
         public DbSet<RAM_Motherboard> RAM_Motherboard { get; set; }
         public DbSet<CPU_Motherboard> CPU_Motherboard { get; set; }
         public DbSet<CPU_RAM> CPU_RAM { get; set; }
+
+        //order
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

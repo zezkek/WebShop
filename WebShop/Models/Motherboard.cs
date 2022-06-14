@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
+using WebShop.Data.Base;
 
 namespace WebShop.Models
 {
-    public class Motherboard
+    public class Motherboard : IEntityBase
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public CPU_Type CPU_Type { get; set;}
+        public CPU_Type CPU_Type { get; set; }
         public RAM_Type RAM_Type { get; set; }
         public string Description { get; set; }
         public List<CPU_Motherboard> CPU_Motherboards { get; set; }

@@ -2,7 +2,6 @@
 using WebShop.Data.Static;
 using WebShop.Data.ViewModels;
 using WebShop.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,14 +49,14 @@ namespace WebShop.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Movies");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
-                TempData["Error"] = "Wrong credentials. Please, try again!";
+                TempData["Error"] = "Неверные данные.";
                 return View(loginVM);
             }
 
-            TempData["Error"] = "Wrong credentials. Please, try again!";
+            TempData["Error"] = "Неверные данные.";
             return View(loginVM);
         }
 
@@ -72,7 +71,7 @@ namespace WebShop.Controllers
             var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email address is already in use";
+                TempData["Error"] = "Пользователь с такой почтой уже существует!";
                 return View(registerVM);
             }
 
@@ -94,7 +93,7 @@ namespace WebShop.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Movies");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AccessDenied(string ReturnUrl)

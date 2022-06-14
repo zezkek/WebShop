@@ -8,8 +8,8 @@ namespace WebShop.Data.ViewModels
 {
     public class LoginVM
     {
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "Email address is required")]
+        [Display(Name = "Ваш E-Mail")]
+        [Required(ErrorMessage = "Это поле обязательно")]
         public string EmailAddress { get; set; }
 
         [Required]
