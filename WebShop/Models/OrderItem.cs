@@ -15,7 +15,7 @@ namespace WebShop.Models
         public double Price { get; set; }
         public int ItemId { get; set; }
         public int ItemType { get; set; }
-
+        public string Name { get; set; }
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]
         public Order Order { get; set; }

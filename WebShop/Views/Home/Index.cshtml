@@ -8,11 +8,18 @@
         @for (int i = 0; i <= 6; i += 3)
         {
         <div class="bg-white flex-fill border border-dark rounded d-flex p-2" style="gap:10px;">
-            <img class="rounded" src="~/img/@Model[i]" style="max-width:150px;"/>
+            <img class="rounded" src="~/img/@Model[i]" style="max-width:150px;" />
             <div class="d-flex flex-column">
                 <p class="text-break flex-fill text-center">@Model[i + 1]</p>
                 <p class="text-break flex-fill text-center">@Model[i + 2]</p>
             </div>
+            <a class="btn btn-success text-white"
+               asp-controller="Orders"
+               asp-action="AddItemToShoppingCart"
+               asp-route-id="1"
+               asp-route-type="1"
+               asp-route-name="@Model[i+1].ToString()">
+            </a>
         </div>
         }
     </div>

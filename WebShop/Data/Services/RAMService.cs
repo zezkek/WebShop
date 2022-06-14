@@ -15,7 +15,7 @@ namespace WebShop.Data.Services
         {
             _context = context;
         }
-        public async Task<RAM> GetCPUByIdAsync(int id)
+        public async Task<RAM> GetRAMByIdAsync(int id)
         {
             var ramDetail = await _context.RAM.FirstOrDefaultAsync(n => n.Id == id);
             return ramDetail;

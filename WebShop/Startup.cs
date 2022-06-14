@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
+using WebShop.Data.Cart;
+using WebShop.Data.Services;
 using WebShop.Models;
 
 namespace WebShop
@@ -31,7 +33,16 @@ namespace WebShop
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
+            //services config
+            services.AddScoped<IOrdersService, OrdersService>();
+            services.AddScoped<ICPUService,CPUService>();
+            services.AddScoped<IGPUService,GPUService>();
+            services.AddScoped<IMotherboardService,MotherboardService>();
+            services.AddScoped<IPowerService,PowerService>();
+            services.AddScoped<IRAMService,RAMService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
             services.AddMemoryCache();

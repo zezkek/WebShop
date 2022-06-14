@@ -53,6 +53,8 @@ namespace WebShop.Data
         public DbSet<CPU_RAM> CPU_RAM { get; set; }
 
         //order
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

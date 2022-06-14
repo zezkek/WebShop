@@ -30,7 +30,7 @@ namespace WebShop.Data.Cart
 
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
-        public void AddItemToCart(int ItemId, int ItemType)
+        public void AddItemToCart(int ItemId, int ItemType, string Name, double price)
         {
             var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.ItemId == ItemId && n.ShoppingCartId == ShoppingCartId && n.ItemType == ItemType);
 
@@ -41,7 +41,9 @@ namespace WebShop.Data.Cart
                     ShoppingCartId = ShoppingCartId,
                     ItemId = ItemId,
                     ItemType = ItemType,
-                    Amount = 1
+                    Amount = 1,
+                    Name=Name,
+                    Price=price
                 };
 
                 _context.ShoppingCartItems.Add(shoppingCartItem);
@@ -78,30 +80,13 @@ namespace WebShop.Data.Cart
         public double GetShoppingCartTotal()
         {
             double sum = 0;
-            foreach(var cart in _context.ShoppingCartItems)
-                switch (cart.ItemType)
-                {
-                    case 0:
-                        sum += _context.CPU.ToList()[cart.ItemId].Price * cart.Amount;
-                        break;
-                    case 1:
-                        sum += _context.GPU.ToList()[cart.ItemId].Price * cart.Amount;
-                        break;
-                    case 2:
-                        sum += _context.Motherboard.ToList()[cart.ItemId].Price * cart.Amount;
-                        break;
-                    case 3:
-                        sum += _context.PowerSupply.ToList()[cart.ItemId].Price * cart.Amount;
-                        break;
-                    case 4:
-                        sum += _context.RAM.ToList()[cart.ItemId].Price * cart.Amount;
-                        break;
-                }
+            foreach (var item in _context.ShoppingCartItems.Where(n=>n.ShoppingCartId==ShoppingCartId))
+                sum += item.Price * item.Amount;
             return sum;
         }
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
-            return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.ItemId).Include(n => n.ItemType).ToList());
+            return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).ToList());
         }
     }
 }

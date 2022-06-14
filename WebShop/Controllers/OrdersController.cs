@@ -9,10 +9,11 @@ using WebShop.Data;
 using WebShop.Data.Cart;
 using WebShop.Data.Services;
 using WebShop.Data.ViewModels;
+using WebShop.Models;
 
 namespace WebShop.Controllers
 {
-    [Authorize]
+    
     public class OrdersController : Controller
     {
         private readonly AppDbContext _context;
@@ -59,32 +60,120 @@ namespace WebShop.Controllers
 
             return View(response);
         }
-        public async Task<IActionResult> AddItemToShoppingCart(int id, int type)
+        public async Task<IActionResult> AddItemToShoppingCart(int id, int type, string name)
         {
             switch (type)
             {
                 case 0:
-                    var item = await _cpuService.GetCPUByIdAsync(id);
+                    {
+                        CPU item = await _cpuService.GetCPUByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.AddItemToCart(item.Id, type, item.Name, item.Price);
+                        }
+                    }
                     break;
                 case 1:
-                    var item = await _cpuService.GetCPUByIdAsync(id);
+                    {
+                        GPU item = await _gpuService.GetGPUByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.AddItemToCart(item.Id, type, item.Name, item.Price);
+                        }
+                    }
                     break;
                 case 2:
-                    var item = await _cpuService.GetCPUByIdAsync(id);
+                    {
+                        var item = await _motherboardService.GetMotherboardByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.AddItemToCart(item.Id, type, item.Name, item.Price);
+                        }
+                    }
                     break;
                 case 3:
-                    var item = await _cpuService.GetCPUByIdAsync(id);
+                    {
+                        var item = await _powerService.GetPowerByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.AddItemToCart(item.Id, type, item.Name, item.Price);
+                        }
+                    }
                     break;
                 case 4:
-                    var item = await _cpuService.GetCPUByIdAsync(id);
+                    {
+                        var item = await _ramservice.GetRAMByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.AddItemToCart(item.Id, type, item.Name, item.Price);
+                        }
+                    }
                     break;
             }
-
-            if (item != null)
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+        public async Task<IActionResult> RemoveItemFromShoppingCart(int id, int type)
+        {
+            switch (type)
             {
-                _shoppingCart.AddItemToCart(item);
+                case 0:
+                    {
+                        CPU item = await _cpuService.GetCPUByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.RemoveItemFromCart(item.Id, type);
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        GPU item = await _gpuService.GetGPUByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.RemoveItemFromCart(item.Id, type);
+                        }
+                    }
+                    break;
+                case 2:
+                    {
+                        var item = await _motherboardService.GetMotherboardByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.RemoveItemFromCart(item.Id, type);
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        var item = await _powerService.GetPowerByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.RemoveItemFromCart(item.Id, type);
+                        }
+                    }
+                    break;
+                case 4:
+                    {
+                        var item = await _ramservice.GetRAMByIdAsync(id);
+                        if (item != null)
+                        {
+                            _shoppingCart.RemoveItemFromCart(item.Id, type);
+                        }
+                    }
+                    break;
             }
             return RedirectToAction(nameof(ShoppingCart));
+        }
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
+
+            await _ordersService.StoreOrderAsync(items, userId, userEmailAddress);
+            await _shoppingCart.ClearShoppingCartAsync();
+
+            return View("OrderCompleted");
         }
     }
 }

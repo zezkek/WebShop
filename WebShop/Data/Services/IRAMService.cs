@@ -8,6 +8,6 @@ namespace WebShop.Data.Services
 {
     public interface IRAMService
     {
-        Task<RAM> GetCPUByIdAsync(int id);
+        Task<RAM> GetRAMByIdAsync(int id);
     }
 }

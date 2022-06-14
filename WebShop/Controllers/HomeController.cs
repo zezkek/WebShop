@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data;
+using WebShop.Data.Services;
 using WebShop.Models;
 
 namespace WebShop.Controllers
@@ -14,20 +15,25 @@ namespace WebShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+        private readonly ICPUService _cpuService;
+        private readonly IGPUService _gpuService;
+        private readonly IMotherboardService _motherboardService;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger,
+            ICPUService cpuservice, IGPUService gpuservice, IMotherboardService motherboardService)
         {
-            _context = context;
             _logger = logger;
+            _cpuService = cpuservice;
+            _gpuService = gpuservice;
+            _motherboardService = motherboardService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             Random rnd = new Random();
-            CPU rndcpu = _context.CPU.ToList()[rnd.Next(_context.CPU.ToList().Count)];
-            GPU rndgpu = _context.GPU.ToList()[rnd.Next(_context.GPU.ToList().Count)];
-            Motherboard rndmoth = _context.Motherboard.ToList()[rnd.Next(_context.Motherboard.ToList().Count)];
+            CPU rndcpu = await _cpuService.GetCPUByIdAsync(rnd.Next(1, 10));
+            GPU rndgpu = await _gpuService.GetGPUByIdAsync(rnd.Next(1, 5));
+            Motherboard rndmoth = await _motherboardService.GetMotherboardByIdAsync(rnd.Next(1, 5));
             NumberFormatInfo nfi = new CultureInfo("ru-RU", false).NumberFormat;
             nfi.CurrencyDecimalDigits = 0;
             string[] rnditems =
