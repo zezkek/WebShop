@@ -1,0 +1,62 @@
+﻿@model List<ItemToSell>
+
+@{ 
+    ViewData["Title"] = "Каталог"; 
+}
+<div class="d-flex border border-dark rounded flex-wrap justify-content-center" style="background-color: #d6d6d6; gap: 20px; padding: 20px;">
+    @foreach(ItemToSell item in Model)
+    {
+        <div class="card mb-3" style="max-width: 300px;">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @item.ItemName
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @switch (item.ItemType)
+                    {
+                        case 0:
+                            <img src="~/img/cpus/@string.Concat(item.ItemId.ToString(),".jpg")" width="100%" alt="@item.ItemName">
+                        break;
+                        case 1:
+                            <img src="~/img/gpus/@string.Concat(item.ItemId.ToString(),".jpg")" width="100%" alt="@item.ItemName">
+                        break;
+                        case 2:
+                            <img src="~/img/mothers/@string.Concat(item.ItemId.ToString(),".jpg")" width="100%" alt="@item.ItemName">
+                        break;
+                        case 3:
+                            <img src="~/img/powersupps/@string.Concat(item.ItemId.ToString(),".jpg")" width="100%" alt="@item.ItemName">
+                        break;
+                        case 4:
+                            <img src="~/img/rams/@string.Concat(item.ItemId.ToString(),".jpg")" width="100%" alt="@item.ItemName">
+                        break;
+                    }
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <p class="card-text">@item.ItemDescrip</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer ">
+                        <p class="card-text">
+                            <a class="btn btn-success text-white"
+                               asp-controller="Orders"
+                               asp-action="AddItemToShoppingCart"
+                               asp-route-id="@item.ItemId"
+                               asp-route-type="@item.ItemType"
+                               asp-route-name="@item.ItemName">
+                                <i class="bi bi-cart-plus"></i> Добавить в корзину(@item.ItemPrice.ToString())
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

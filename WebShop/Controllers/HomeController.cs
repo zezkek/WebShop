@@ -18,14 +18,16 @@ namespace WebShop.Controllers
         private readonly ICPUService _cpuService;
         private readonly IGPUService _gpuService;
         private readonly IMotherboardService _motherboardService;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeController(ILogger<HomeController> logger, AppDbContext context,
             ICPUService cpuservice, IGPUService gpuservice, IMotherboardService motherboardService)
         {
             _logger = logger;
             _cpuService = cpuservice;
             _gpuService = gpuservice;
             _motherboardService = motherboardService;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -56,5 +58,60 @@ namespace WebShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Catalog()
+        {
+            List<ItemToSell> items = new List<ItemToSell>();
+            foreach(CPU cpus in _context.CPU)
+                items.Add(new ItemToSell
+                {
+                    ItemId=cpus.Id,
+                    ItemType=0,
+                    ItemDescrip=cpus.Description,
+                    ItemPrice=cpus.Price,
+                    ItemName=cpus.Name
+                });
+            foreach (GPU gpus in _context.GPU)
+                items.Add(new ItemToSell
+                {
+                    ItemId = gpus.Id,
+                    ItemType = 1,
+                    ItemDescrip = gpus.Description,
+                    ItemPrice = gpus.Price,
+                    ItemName=gpus.Name
+                });
+            foreach (Motherboard mothers in _context.Motherboard)
+                items.Add(new ItemToSell
+                {
+                    ItemId = mothers.Id,
+                    ItemType = 2,
+                    ItemDescrip = mothers.Description,
+                    ItemPrice = mothers.Price,
+                    ItemName=mothers.Name
+                });
+            foreach (PowerSupply powers in _context.PowerSupply)
+                items.Add(new ItemToSell
+                {
+                    ItemId = powers.Id,
+                    ItemType = 3,
+                    ItemDescrip = powers.Description,
+                    ItemPrice = powers.Price,
+                    ItemName=powers.Name
+                });
+            foreach (RAM rams in _context.RAM)
+                items.Add(new ItemToSell
+                {
+                    ItemId = rams.Id,
+                    ItemType = 4,
+                    ItemDescrip = rams.Description,
+                    ItemPrice = rams.Price,
+                    ItemName=rams.Name
+                });
+            return View(items);
+        }
+        public IActionResult Constructor()
+        {
+            return View(_context);
+        }
+
     }
 }
