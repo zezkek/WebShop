@@ -20,6 +20,11 @@ namespace WebShop.Data.Services
             var cpuDetail = await _context.CPU.FirstOrDefaultAsync(n => n.Id == id);
             return cpuDetail;
         }
+        public async Task<List<CPU>> GetAllCPUAsync()
+        {
+            var allcpu = await _context.CPU.ToListAsync();
+            return allcpu;
+        }
 
     }
 }

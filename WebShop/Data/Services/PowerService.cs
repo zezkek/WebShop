@@ -20,5 +20,10 @@ namespace WebShop.Data.Services
             var powerDetail = await _context.PowerSupply.FirstOrDefaultAsync(n => n.Id == id);
             return powerDetail;
         }
+        public async Task<List<PowerSupply>> GetAllPowerAsync()
+        {
+            var allpower = await _context.PowerSupply.ToListAsync();
+            return allpower;
+        }
     }
 }

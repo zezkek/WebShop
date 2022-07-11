@@ -20,5 +20,10 @@ namespace WebShop.Data.Services
             var motherboardDetail = await _context.Motherboard.FirstOrDefaultAsync(n => n.Id == id);
             return motherboardDetail;
         }
+        public async Task<List<Motherboard>> GetAllMotherboardAsync()
+        {
+            var allmotherboard = await _context.Motherboard.ToListAsync();
+            return allmotherboard;
+        }
     }
 }

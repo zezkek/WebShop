@@ -9,5 +9,6 @@ namespace WebShop.Data.Services
     public interface IGPUService
     {
         Task<GPU> GetGPUByIdAsync(int id);
+        Task<List<GPU>> GetAllGPUAsync();
     }
 }

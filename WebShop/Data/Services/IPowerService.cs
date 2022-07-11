@@ -9,5 +9,6 @@ namespace WebShop.Data.Services
     public interface IPowerService
     {
         Task<PowerSupply> GetPowerByIdAsync(int id);
+        Task<List<PowerSupply>> GetAllPowerAsync();
     }
 }

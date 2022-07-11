@@ -9,5 +9,6 @@ namespace WebShop.Data.Services
     public interface IRAMService
     {
         Task<RAM> GetRAMByIdAsync(int id);
+        Task<List<RAM>> GetAllRAMAsync();
     }
 }

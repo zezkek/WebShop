@@ -55,7 +55,8 @@ namespace WebShop.Controllers
             var response = new ShoppingCartVM()
             {
                 ShoppingCart = _shoppingCart,
-                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
+                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal(),
+                ShoppingCartTotalFuture= _shoppingCart.GetShoppingCartTotalFuture()
             };
 
             return View(response);
@@ -110,6 +111,20 @@ namespace WebShop.Controllers
                     }
                     break;
             }
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+        public async Task<IActionResult> AddItemsToShoppingCart(int idcpu, int idgpu, int idmother, int idram, int idpower)
+        {
+            CPU cpuitem = await _cpuService.GetCPUByIdAsync(idcpu);
+            _shoppingCart.AddItemToCart(cpuitem.Id, 0, cpuitem.Name, cpuitem.Price);
+            GPU gpuitem = await _gpuService.GetGPUByIdAsync(idgpu);
+            _shoppingCart.AddItemToCart(gpuitem.Id, 1, gpuitem.Name, gpuitem.Price);
+            Motherboard motheritem = await _motherboardService.GetMotherboardByIdAsync(idmother);
+            _shoppingCart.AddItemToCart(motheritem.Id, 2, motheritem.Name, motheritem.Price);
+            RAM ramitem = await _ramservice.GetRAMByIdAsync(idram);
+            _shoppingCart.AddItemToCart(ramitem.Id, 3, ramitem.Name, ramitem.Price);
+            PowerSupply poweritem = await _powerService.GetPowerByIdAsync(idpower);
+            _shoppingCart.AddItemToCart(poweritem.Id, 4, poweritem.Name, poweritem.Price);
             return RedirectToAction(nameof(ShoppingCart));
         }
         public async Task<IActionResult> RemoveItemFromShoppingCart(int id, int type)

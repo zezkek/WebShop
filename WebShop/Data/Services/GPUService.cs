@@ -21,5 +21,10 @@ namespace WebShop.Data.Services
             var gpuDetail = await _context.GPU.FirstOrDefaultAsync(n => n.Id == id);
             return gpuDetail;
         }
+        public async Task<List<GPU>> GetAllGPUAsync()
+        {
+            var allgpu = await _context.GPU.ToListAsync();
+            return allgpu;
+        }
     }
 }

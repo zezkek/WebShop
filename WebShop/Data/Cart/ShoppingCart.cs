@@ -84,6 +84,10 @@ namespace WebShop.Data.Cart
                 sum += item.Price * item.Amount;
             return sum;
         }
+        public double GetShoppingCartTotalFuture()
+        {
+            return GetShoppingCartTotal() * 1.04;
+        }
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).ToList());

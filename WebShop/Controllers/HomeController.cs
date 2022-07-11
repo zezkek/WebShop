@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,16 +20,21 @@ namespace WebShop.Controllers
         private readonly ICPUService _cpuService;
         private readonly IGPUService _gpuService;
         private readonly IMotherboardService _motherboardService;
+        private readonly IPowerService _powerService;
+        private readonly IRAMService _ramService;
         private readonly AppDbContext _context;
 
         public HomeController(ILogger<HomeController> logger, AppDbContext context,
-            ICPUService cpuservice, IGPUService gpuservice, IMotherboardService motherboardService)
+            ICPUService cpuservice, IGPUService gpuservice, IMotherboardService motherboardService,
+            IPowerService powerService, IRAMService ramService)
         {
             _logger = logger;
             _cpuService = cpuservice;
             _gpuService = gpuservice;
             _motherboardService = motherboardService;
             _context = context;
+            _powerService = powerService;
+            _ramService = ramService;
         }
 
         public async Task<IActionResult> Index()
@@ -110,8 +117,161 @@ namespace WebShop.Controllers
         }
         public IActionResult Constructor()
         {
-            return View(_context);
+            return View(_motherboardService.GetAllMotherboardAsync().Result.ToList());
         }
-
+        public async Task<IActionResult> ConstructorOne(int selectedmotherboardId)
+        {
+            Motherboard selectedmotherboard = await _motherboardService.GetMotherboardByIdAsync(selectedmotherboardId);
+            List<ItemToSell> ItemsToSend = new List<ItemToSell>();
+            foreach(CPU cpu in _cpuService.GetAllCPUAsync().Result.Where(c=>c.CPU_Type==selectedmotherboard.CPU_Type))
+            {
+                ItemsToSend.Add(new ItemToSell
+                {
+                    ItemDescrip = cpu.Description,
+                    ItemId = cpu.Id,
+                    ItemName = cpu.Name,
+                    ItemPrice = cpu.Price,
+                    ItemType = 0
+                });
+            }
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip=selectedmotherboard.Description,
+                ItemId=selectedmotherboard.Id,
+                ItemName=selectedmotherboard.Name,
+                ItemPrice=selectedmotherboard.Price,
+                ItemType=2
+            });
+            return View(ItemsToSend);
+        }
+        public async Task<IActionResult> ConstructorTwo(int selectedmotherboardId, int selectedcpuId)
+        {
+            Motherboard selectedmotherboard = await _motherboardService.GetMotherboardByIdAsync(selectedmotherboardId);
+            CPU selectedcpu = await _cpuService.GetCPUByIdAsync(selectedcpuId);
+            List<ItemToSell> ItemsToSend = new List<ItemToSell>();
+            foreach (RAM ram in _ramService.GetAllRAMAsync().Result.Where(c => c.RAM_Type == selectedmotherboard.RAM_Type))
+            {
+                ItemsToSend.Add(new ItemToSell
+                {
+                    ItemDescrip = ram.Description,
+                    ItemId = ram.Id,
+                    ItemName = ram.Name,
+                    ItemPrice = ram.Price,
+                    ItemType = 4
+                });
+            }
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedmotherboard.Description,
+                ItemId = selectedmotherboard.Id,
+                ItemName = selectedmotherboard.Name,
+                ItemPrice = selectedmotherboard.Price,
+                ItemType = 2
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedcpu.Description,
+                ItemId = selectedcpu.Id,
+                ItemName = selectedcpu.Name,
+                ItemPrice = selectedcpu.Price,
+                ItemType = 0
+            });
+            return View(ItemsToSend);
+        }
+        public async Task<IActionResult> ConstructorThree(int selectedmotherboardId, int selectedcpuId, int selectedramId)
+        {
+            Motherboard selectedmotherboard = await _motherboardService.GetMotherboardByIdAsync(selectedmotherboardId);
+            CPU selectedcpu = await _cpuService.GetCPUByIdAsync(selectedcpuId);
+            RAM selectedram = await _ramService.GetRAMByIdAsync(selectedramId);
+            List<ItemToSell> ItemsToSend = new List<ItemToSell>();
+            foreach (GPU gpu in _gpuService.GetAllGPUAsync().Result)
+            {
+                ItemsToSend.Add(new ItemToSell
+                {
+                    ItemDescrip = gpu.Description,
+                    ItemId = gpu.Id,
+                    ItemName = gpu.Name,
+                    ItemPrice = gpu.Price,
+                    ItemType = 1
+                });
+            }
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedmotherboard.Description,
+                ItemId = selectedmotherboard.Id,
+                ItemName = selectedmotherboard.Name,
+                ItemPrice = selectedmotherboard.Price,
+                ItemType = 2
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedcpu.Description,
+                ItemId = selectedcpu.Id,
+                ItemName = selectedcpu.Name,
+                ItemPrice = selectedcpu.Price,
+                ItemType = 0
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedram.Description,
+                ItemId = selectedram.Id,
+                ItemName = selectedram.Name,
+                ItemPrice = selectedram.Price,
+                ItemType = 4
+            });
+            return View(ItemsToSend);
+        }
+        public async Task<IActionResult> ConstructorFour(int selectedmotherboardId, int selectedcpuId, int selectedramId, int selectedgpuId)
+        {
+            Motherboard selectedmotherboard = await _motherboardService.GetMotherboardByIdAsync(selectedmotherboardId);
+            CPU selectedcpu = await _cpuService.GetCPUByIdAsync(selectedcpuId);
+            RAM selectedram = await _ramService.GetRAMByIdAsync(selectedramId);
+            GPU selectedgpu = await _gpuService.GetGPUByIdAsync(selectedgpuId);
+            List<ItemToSell> ItemsToSend = new List<ItemToSell>();
+            foreach (PowerSupply power in _powerService.GetAllPowerAsync().Result.Where(p => p.Power_output >= selectedcpu.Power_usage + selectedgpu.Power_usage))
+            {
+                ItemsToSend.Add(new ItemToSell
+                {
+                    ItemDescrip = power.Description,
+                    ItemId = power.Id,
+                    ItemName = power.Name,
+                    ItemPrice = power.Price,
+                    ItemType = 3
+                });
+            }
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedmotherboard.Description,
+                ItemId = selectedmotherboard.Id,
+                ItemName = selectedmotherboard.Name,
+                ItemPrice = selectedmotherboard.Price,
+                ItemType = 2
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedcpu.Description,
+                ItemId = selectedcpu.Id,
+                ItemName = selectedcpu.Name,
+                ItemPrice = selectedcpu.Price,
+                ItemType = 0
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedram.Description,
+                ItemId = selectedram.Id,
+                ItemName = selectedram.Name,
+                ItemPrice = selectedram.Price,
+                ItemType = 4
+            });
+            ItemsToSend.Add(new ItemToSell
+            {
+                ItemDescrip = selectedgpu.Description,
+                ItemId = selectedgpu.Id,
+                ItemName = selectedgpu.Name,
+                ItemPrice = selectedgpu.Price,
+                ItemType = 1
+            });
+            return View(ItemsToSend);
+        }
     }
 }

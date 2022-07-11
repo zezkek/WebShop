@@ -20,5 +20,10 @@ namespace WebShop.Data.Services
             var ramDetail = await _context.RAM.FirstOrDefaultAsync(n => n.Id == id);
             return ramDetail;
         }
+        public async Task<List<RAM>> GetAllRAMAsync()
+        {
+            var allram = await _context.RAM.ToListAsync();
+            return allram;
+        }
     }
 }

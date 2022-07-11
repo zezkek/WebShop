@@ -9,5 +9,6 @@ namespace WebShop.Data.Services
     public interface ICPUService
     {
         Task<CPU> GetCPUByIdAsync(int id);
+        Task<List<CPU>> GetAllCPUAsync();
     }
 }

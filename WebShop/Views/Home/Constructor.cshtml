@@ -1,6 +1,218 @@
-﻿@model AppDbContext 
+﻿@model List<Motherboard>
 
 @{ ViewData["Title"] = "Конструктор"; }
 <div class="d-flex border border-dark rounded flex-wrap justify-content-center" style="background-color: #d6d6d6; gap: 20px; padding: 20px;">
-        
+        <button class="btn dropdown-toggle" type="button" id="mother-btn" data-toggle="dropdown" aria-expanded="true">
+            <i class="bi bi-person-badge"></i>Motherboards
+        </button>
+        <div class="dropdown-menu" aria-labelledby="mother-btn">
+            @foreach (Motherboard item in Model)
+            {
+            <div class="card mb-3" style="max-width: 300px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Name
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="~/img/mothers/@string.Concat(item.Id.ToString(), ".jpg")" width="100%" alt="@item.Name">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-success text-white"
+                                   asp-controller="Home"
+                                   asp-action="ConstructorOne"
+                                   asp-route-selectedmotherboardId="@item.Id">
+                                    <i class="bi bi-cart-plus"></i> Добавить в конструктор
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        @*<button class="btn dropdown-toggle" type="button" id="cpu-btn" data-toggle="dropdown"
+                aria-expanded="true">
+            <i class="bi bi-person-badge"></i>CPU
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="cpu-btn">
+            @foreach (CPU item in Model.CPU)
+            {
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @item.Name
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/cpus/@string.Concat(item.Id.ToString(), ".jpg")" width="100%" alt="@item.Name"> break;
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@item.Description</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <a class="btn btn-success text-white"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id"
+                           asp-route-type="0"
+                           asp-route-name="@item.Name">
+                            <i class="bi bi-cart-plus"></i> Добавить в корзину(@item.Price.ToString())
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>}
+        </ul>
+        <button class="btn dropdown-toggle" type="button" id="gpu-btn" data-toggle="dropdown"
+                aria-expanded="true">
+            <i class="bi bi-person-badge"></i>GPU
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="gpu-btn">
+            @foreach (GPU item in Model.GPU)
+            {
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @item.Name
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/cpus/@string.Concat(item.Id.ToString(), ".jpg")" width="100%" alt="@item.Name"> break;
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@item.Description</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <a class="btn btn-success text-white"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id"
+                           asp-route-type="1"
+                           asp-route-name="@item.Name">
+                            <i class="bi bi-cart-plus"></i> Добавить в корзину(@item.Price.ToString())
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>}
+        </ul>
+        <button class="btn dropdown-toggle" type="button" id="power-btn" data-toggle="dropdown"
+                aria-expanded="true">
+            <i class="bi bi-person-badge"></i>Power
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="power-btn">
+            @foreach (PowerSupply item in Model.PowerSupply)
+            {
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @item.Name
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/cpus/@string.Concat(item.Id.ToString(), ".jpg")" width="100%" alt="@item.Name"> break;
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@item.Description</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <a class="btn btn-success text-white"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id"
+                           asp-route-type="3"
+                           asp-route-name="@item.Name">
+                            <i class="bi bi-cart-plus"></i> Добавить в корзину(@item.Price.ToString())
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>}
+        </ul>
+        <button class="btn dropdown-toggle" type="button" id="ram-btn" data-toggle="dropdown"
+                aria-expanded="true">
+            <i class="bi bi-person-badge"></i>Power
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="ram-btn">
+            @foreach (RAM item in Model.RAM)
+            {
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @item.Name
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/cpus/@string.Concat(item.Id.ToString(), ".jpg")" width="100%" alt="@item.Name"> break;
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@item.Description</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <a class="btn btn-success text-white"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id"
+                           asp-route-type="4"
+                           asp-route-name="@item.Name">
+                            <i class="bi bi-cart-plus"></i> Добавить в корзину(@item.Price.ToString())
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>}
+        </ul>*@
 </div>

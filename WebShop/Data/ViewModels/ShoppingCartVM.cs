@@ -10,5 +10,6 @@ namespace WebShop.Data.ViewModels
     {
         public ShoppingCart ShoppingCart { get; set; }
         public double ShoppingCartTotal { get; set; }
+        public double ShoppingCartTotalFuture { get; set; }
     }
 }

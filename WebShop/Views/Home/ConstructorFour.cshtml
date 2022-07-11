@@ -1,0 +1,164 @@
+﻿@model List<ItemToSell>
+
+@{ViewData["Title"] = "Конструктор";}
+<div class="d-flex border border-dark rounded flex-wrap justify-content-center" style="background-color: #d6d6d6; gap: 20px; padding: 20px;">
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @Model.FirstOrDefault(t => t.ItemType == 2).ItemName
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/mothers/@string.Concat(Model.FirstOrDefault(t=>t.ItemType==2).ItemId.ToString(), ".jpg")" width="100%" alt="@Model.FirstOrDefault(t=>t.ItemType==2).ItemName">
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@Model.FirstOrDefault(t => t.ItemType == 2).ItemDescrip</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <i class="bi bi-cart-plus"></i>@Model.FirstOrDefault(t => t.ItemType == 2).ItemPrice Rub.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @Model.FirstOrDefault(t => t.ItemType == 0).ItemName
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/cpus/@string.Concat(Model.FirstOrDefault(t=>t.ItemType==0).ItemId.ToString(), ".jpg")" width="100%" alt="@Model.FirstOrDefault(t=>t.ItemType==0).ItemName">
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@Model.FirstOrDefault(t => t.ItemType == 0).ItemDescrip</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <i class="bi bi-cart-plus"></i>@Model.FirstOrDefault(t => t.ItemType == 0).ItemPrice Rub.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @Model.FirstOrDefault(t => t.ItemType == 4).ItemName
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/rams/@string.Concat(Model.FirstOrDefault(t=>t.ItemType==4).ItemId.ToString(), ".jpg")" width="100%" alt="@Model.FirstOrDefault(t=>t.ItemType==4).ItemName">
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@Model.FirstOrDefault(t => t.ItemType == 4).ItemDescrip</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <i class="bi bi-cart-plus"></i>@Model.FirstOrDefault(t => t.ItemType == 4).ItemPrice Rub.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" style="max-width: 300px;">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="card-header text-white bg-info">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            @Model.FirstOrDefault(t => t.ItemType == 1).ItemName
+                        </h5>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="~/img/gpus/@string.Concat(Model.FirstOrDefault(t=>t.ItemType==1).ItemId.ToString(), ".jpg")" width="100%" alt="@Model.FirstOrDefault(t=>t.ItemType==1).ItemName">
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <p class="card-text">@Model.FirstOrDefault(t => t.ItemType == 1).ItemDescrip</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-footer ">
+                    <p class="card-text">
+                        <i class="bi bi-cart-plus"></i>@Model.FirstOrDefault(t => t.ItemType == 1).ItemPrice Rub.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button class="btn dropdown-toggle" type="button" id="ram-btn" data-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-badge"></i>Блок питания
+        </button>
+        <div class="dropdown-menu" aria-labelledby="ram-btn">
+            @foreach (var item in Model.Where(c => c.ItemType == 3))
+            {
+                <div class="card mb-3" style="max-height: 300px; min-width: 300px;">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-header text-white bg-info">
+                                <p class="card-text">
+                                    <h5 class="card-title">
+                                        @item.ItemName
+                                    </h5>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="~/img/powersupps/@string.Concat(item.ItemId.ToString(), ".jpg")" width="100%" alt="@item.ItemName">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <p class="card-text">@item.ItemDescrip</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer ">
+                                <p class="card-text">
+                                    <a class="btn btn-success text-white"
+                                       asp-controller="Orders"
+                                       asp-action="AddItemsToShoppingCart"
+                                       asp-route-idmother="@Model.FirstOrDefault(t=>t.ItemType==2).ItemId"
+                                       asp-route-idcpu="@Model.FirstOrDefault(t=>t.ItemType==0).ItemId"
+                                       asp-route-idram="@Model.FirstOrDefault(t=>t.ItemType==4).ItemId"
+                                       asp-route-idgpu="@Model.FirstOrDefault(t=>t.ItemType==1).ItemId"
+                                       asp-route-idpower="@item.ItemId">
+                                        <i class="bi bi-cart-plus"></i> Добавить весь конструкор в корзину
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -9,5 +9,6 @@ namespace WebShop.Data.Services
     public interface IMotherboardService
     {
         Task<Motherboard> GetMotherboardByIdAsync(int id);
+        Task <List<Motherboard>> GetAllMotherboardAsync();
     }
 }
